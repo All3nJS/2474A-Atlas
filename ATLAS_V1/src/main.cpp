@@ -94,7 +94,7 @@ lemlib::Chassis chassis(Drivetrain,
 
 //Pneumatics
 pros::adi::Pneumatics descore({17, 'a'}, false);   
-pros::adi::Pneumatics double_park({17, 'b'}, false);  
+pros::adi::Pneumatics park({17, 'b'}, false);  
 pros::adi::Pneumatics scraper({17, 'c'}, false);  
 pros::adi::Pneumatics redirect({17, 'd'}, false);  
 
@@ -221,7 +221,7 @@ void opcontrol() {
 		}
 
 		if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
-       		double_park.toggle();
+       		park.toggle();
 		}
 
 		if(master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y)) {
