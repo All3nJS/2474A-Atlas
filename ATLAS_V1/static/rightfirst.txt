@@ -1,0 +1,37 @@
+-61.36, -16.613, 74.732
+-59.368, -16.452, 71.254
+-57.372, -16.536, 67.601
+-55.421, -16.947, 63.743
+-53.597, -17.757, 63.756
+-52.015, -18.974, 66.858
+-50.72, -20.496, 69.321
+-49.674, -22.199, 65.558
+-48.794, -23.994, 61.562
+-47.992, -25.826, 57.288
+-47.172, -27.65, 52.668
+-46.22, -29.408, 47.605
+-44.966, -30.958, 41.95
+-43.298, -32.034, 36.618
+-41.346, -32.409, 54.563
+-39.363, -32.181, 74.934
+-37.447, -31.618, 79.557
+-35.607, -30.838, 76.299
+-33.825, -29.931, 72.895
+-32.092, -28.934, 69.324
+-30.397, -27.872, 65.559
+-28.732, -26.765, 61.562
+-27.104, -25.604, 57.288
+-25.493, -24.418, 52.669
+-23.896, -23.214, 47.602
+-22.327, -21.974, 41.928
+-20.764, -20.726, 35.355
+-19.221, -19.454, 27.24
+-16.977, -17.583, 0
+-16.977, -17.583, 0
+-1.618, -4.774, 0
+endData
+127
+100
+200
+-61.36, -16.613, -38.805, -13.46, -58.692, -52.993, -16.977, -17.583
+#PATH.JERRYIO-DATA {"appVersion":"0.10.0","format":"LemLib v0.5","gc":{"robotWidth":14.5,"robotHeight":14.5,"robotIsHolonomic":false,"showRobot":true,"uol":2.54,"pointDensity":2,"controlMagnetDistance":1.968503937007874,"fieldImage":{"displayName":"V5RC 2026 - Push Back","signature":"V5RC-PushBack-H2H-TopDownHighlighted-TileColor66_71","origin":{"__type":"built-in"}},"coordinateSystem":"VEX Gaming Positioning System"},"paths":[{"segments":[{"controls":[{"uid":"DMDVlWEOOs","x":-61.36014091727682,"y":-16.61331878590301,"lock":false,"visible":true,"heading":0,"__type":"end-point"},{"uid":"wGWoelHTfm","x":-38.80483220064937,"y":-13.460426169600252,"lock":false,"visible":true,"__type":"control"},{"uid":"xgJ56syYis","x":-58.692308703482176,"y":-52.9928489740118,"lock":false,"visible":true,"__type":"control"},{"uid":"0dgzTCYcGO","x":-16.977114087784102,"y":-17.583439590919248,"lock":false,"visible":true,"heading":0,"__type":"end-point"}],"speedProfiles":[],"lookaheadKeyframes":[],"uid":"LqkON7f0OQ"}],"pc":{"speedLimit":{"minLimit":{"value":0,"label":"0"},"maxLimit":{"value":127,"label":"127"},"step":1,"from":20,"to":100},"bentRateApplicableRange":{"minLimit":{"value":0,"label":"0"},"maxLimit":{"value":1,"label":"1"},"step":0.001,"from":0,"to":0.1},"maxDecelerationRate":127},"name":"Path","uid":"Eg2pMM7p1u","lock":false,"visible":true}]}
