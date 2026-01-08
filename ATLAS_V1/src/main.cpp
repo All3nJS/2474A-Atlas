@@ -4,7 +4,7 @@
 #include "liblvgl/misc/lv_area.h"
 #include "liblvgl/widgets/image/lv_image.h"
 
-//Controller
+//Controller master
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 
 //Drivetrain motorgroups
