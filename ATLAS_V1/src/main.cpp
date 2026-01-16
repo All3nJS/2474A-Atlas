@@ -113,7 +113,69 @@ void display_img_from_c_array() {
 
 }
 
+<<<<<<< Updated upstream
 void display_img_from_file(const void * src){
+=======
+void menu(void)
+{	
+	
+	static lv_style_t style;
+    lv_style_init(&style);
+
+	static lv_style_t style1;
+    lv_style_init(&style1);
+
+    /*Create a menu object*/
+    lv_obj_t * menu = lv_menu_create(lv_screen_active());
+    lv_obj_set_size(menu, lv_display_get_horizontal_resolution(NULL), lv_display_get_vertical_resolution(NULL));
+    lv_obj_center(menu);
+
+	
+
+	lv_obj_t * label;
+
+    lv_obj_t * btn1 = lv_obj_create(lv_screen_active());
+    lv_obj_add_style(btn1, &style, 0);
+    lv_obj_set_pos(btn1, 158, 180); 
+    lv_obj_remove_flag(btn1, LV_OBJ_FLAG_PRESS_LOCK);
+
+
+    label = lv_label_create(btn1);
+    lv_label_set_text(label, "Red Autos");
+    lv_obj_center(label);
+	
+	lv_obj_set_style_bg_color(btn1, lv_palette_main(LV_PALETTE_RED), LV_PART_MAIN);
+	lv_style_set_width(&style, 200);
+    lv_style_set_height(&style, LV_SIZE_CONTENT);
+
+	lv_obj_t * btn2 = lv_obj_create(lv_screen_active());
+    lv_obj_add_style(btn2, &style, 0);
+    lv_obj_set_pos(btn2, 0, 180); 
+    lv_obj_remove_flag(btn2, LV_OBJ_FLAG_PRESS_LOCK);
+
+
+    label = lv_label_create(btn2);
+    lv_label_set_text(label, "Blue Autos");
+    lv_obj_center(label);
+	
+	lv_obj_set_style_bg_color(btn2, lv_palette_main(LV_PALETTE_BLUE), LV_PART_MAIN);
+	lv_style_set_width(&style, 200);
+    lv_style_set_height(&style, LV_SIZE_CONTENT);
+
+    lv_obj_t * btn4 = lv_obj_create(lv_screen_active());
+    lv_obj_add_style(btn4, &style, 0);
+    lv_obj_set_pos(btn4, 318, 180); 
+    lv_obj_remove_flag(btn4, LV_OBJ_FLAG_PRESS_LOCK);
+
+
+    label = lv_label_create(btn4);
+    lv_label_set_text(label, "Skills Autos");
+    lv_obj_center(label);
+	
+	lv_obj_set_style_bg_color(btn4, lv_palette_main(LV_PALETTE_GREEN), LV_PART_MAIN);
+	lv_style_set_width(&style, 162);
+    lv_style_set_height(&style, LV_SIZE_CONTENT);
+>>>>>>> Stashed changes
 
 }
 
@@ -264,7 +326,7 @@ void opcontrol() {
 		
         //}
         // A small delay is necessary to prevent the brain from overloading
-        pros::delay(20); 
+        pros::delay(21); 
 	} 	                         // Run for 20 ms then update                        // Run for 20 ms then update
 	
 }
