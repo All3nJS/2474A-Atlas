@@ -9,7 +9,7 @@ pros::Controller master(pros::E_CONTROLLER_MASTER);
 
 //Drivetrain motorgroups
 pros::MotorGroup left_mg({-13, -6, 5}, pros::MotorGearset::blue);
-pros::MotorGroup right_mg({14, 11, -12}, pros::MotorGearset::blue);
+pros::MotorGroup right_mg({14, 1, -12}, pros::MotorGearset::blue);
 //right_mg.set_gearing(pros::E_MOTOR_GEARSET_06);
 //left_mg.set_gearing(pros::E_MOTOR_GEARSET_06);
 
@@ -43,6 +43,7 @@ lemlib::ExpoDriveCurve steer_curve(3, // joystick deadband out of 127
 pros::Imu imu(18);
 pros::Rotation horizontal_rotation_sensor(-20);
 pros::Rotation vertical_rotation_sensor(19);
+pros::Optical color_sensor(1);
 
 // horizontal tracking wheel
 lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_rotation_sensor, lemlib::Omniwheel::NEW_2, -2.74);
@@ -151,19 +152,32 @@ void competition_initialize() {}
  * from where it left off.
  */
 ASSET(leftfirst_txt);
-
+ASSET(leftsecond_txt);
 void autonomous() {
-// set position to x:0, y:0, heading:0
-	chassis.setPose(-62.549, 16.342, 0);
+// set position to x:-62.168, y:16.055, heading:0
+	chassis.setPose(-62.168, 16.055, 0);
 	stage1(127);
-	chassis.follow(leftfirst_txt, 15, 2000);
-	chassis.waitUntil(50);
-	stage1(0);
+	chassis.follow(leftfirst_txt, 15, 3000);
+	chassis.moveToPose(-7.864, 9, 316, 3000, {.forwards = false});
+	redirect.set_value(false);
+	chassis.waitUntil(27);
+	stage2(127); 
+	chassis.waitUntil(1);
+	scraper.set_value(true);
+	redirect.set_value(true);
+	chassis.follow(leftsecond_txt, 15, 5000);
+	stage2(0);
+	stage1(127);
+	chassis.moveToPose(-26.882, 47.101, 270, 2000, {.forwards = false});
+	stage2(127);
+	chassis.moveToPose(-62.503, 46.818, 270, 2000);
+
+
 
 	
 }
 /**
- * Runs the operator control code. This function will be started in its own task
+ * Runs the operator control code. This function will  be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
  * the Field Management System or the VEX Competition Switch in the operator
  * control mode.
@@ -232,7 +246,23 @@ void opcontrol() {
        		redirect.toggle();
 		}
 
-	
+		// Turn on the sensor's LED for better results in low light
+        //color_sensor.set_led_brightness(100); 
+
+        // Check if the detected color is red
+        //if (color_sensor.color() == vex::color::red) {
+            
+            // e.g., intake.move_voltage(12000); 
+        //} 
+        // Check if the detected color is blue
+        //else if (color_sensor.color() == vex::color::blue) {
+            // Code to run when blue is detected
+            // e.g., intake.move_voltage(-12000); // Reverse the intake
+        //} 
+        // If neither color is detected, stop or do something else
+        //else {
+		
+        //}
         // A small delay is necessary to prevent the brain from overloading
         pros::delay(20); 
 	} 	                         // Run for 20 ms then update                        // Run for 20 ms then update
