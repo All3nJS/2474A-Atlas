@@ -9,7 +9,7 @@ pros::Controller master(pros::E_CONTROLLER_MASTER);
 
 //Drivetrain motorgroups
 pros::MotorGroup left_mg({-13, -6, 5}, pros::MotorGearset::blue);
-pros::MotorGroup right_mg({14, 11, -12}, pros::MotorGearset::blue);
+pros::MotorGroup right_mg({14, 1, -12}, pros::MotorGearset::blue);
 //right_mg.set_gearing(pros::E_MOTOR_GEARSET_06);
 //left_mg.set_gearing(pros::E_MOTOR_GEARSET_06);
 
@@ -43,6 +43,7 @@ lemlib::ExpoDriveCurve steer_curve(3, // joystick deadband out of 127
 pros::Imu imu(18);
 pros::Rotation horizontal_rotation_sensor(-20);
 pros::Rotation vertical_rotation_sensor(19);
+pros::Optical color_sensor(1);
 
 // horizontal tracking wheel
 lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_rotation_sensor, lemlib::Omniwheel::NEW_2, -2.74);
@@ -112,8 +113,66 @@ void display_img_from_c_array() {
 
 }
 
-void display_img_from_file(const void * src){
 
+void menu(void)
+{	
+	
+	static lv_style_t style;
+    lv_style_init(&style);
+
+	static lv_style_t style1;
+    lv_style_init(&style1);
+
+    /*Create a menu object*/
+    lv_obj_t * menu = lv_menu_create(lv_screen_active());
+    lv_obj_set_size(menu, lv_display_get_horizontal_resolution(NULL), lv_display_get_vertical_resolution(NULL));
+    lv_obj_center(menu);
+
+	
+
+	lv_obj_t * label;
+
+    lv_obj_t * btn1 = lv_obj_create(lv_screen_active());
+    lv_obj_add_style(btn1, &style, 0);
+    lv_obj_set_pos(btn1, 158, 180); 
+    lv_obj_remove_flag(btn1, LV_OBJ_FLAG_PRESS_LOCK);
+
+
+    label = lv_label_create(btn1);
+    lv_label_set_text(label, "Red Autos");
+    lv_obj_center(label);
+	
+	lv_obj_set_style_bg_color(btn1, lv_palette_main(LV_PALETTE_RED), LV_PART_MAIN);
+	lv_style_set_width(&style, 200);
+    lv_style_set_height(&style, LV_SIZE_CONTENT);
+
+	lv_obj_t * btn2 = lv_obj_create(lv_screen_active());
+    lv_obj_add_style(btn2, &style, 0);
+    lv_obj_set_pos(btn2, 0, 180); 
+    lv_obj_remove_flag(btn2, LV_OBJ_FLAG_PRESS_LOCK);
+
+
+    label = lv_label_create(btn2);
+    lv_label_set_text(label, "Blue Autos");
+    lv_obj_center(label);
+	
+	lv_obj_set_style_bg_color(btn2, lv_palette_main(LV_PALETTE_BLUE), LV_PART_MAIN);
+	lv_style_set_width(&style, 200);
+    lv_style_set_height(&style, LV_SIZE_CONTENT);
+
+    lv_obj_t * btn4 = lv_obj_create(lv_screen_active());
+    lv_obj_add_style(btn4, &style, 0);
+    lv_obj_set_pos(btn4, 318, 180); 
+    lv_obj_remove_flag(btn4, LV_OBJ_FLAG_PRESS_LOCK);
+
+
+    label = lv_label_create(btn4);
+    lv_label_set_text(label, "Skills Autos");
+    lv_obj_center(label);
+	
+	lv_obj_set_style_bg_color(btn4, lv_palette_main(LV_PALETTE_GREEN), LV_PART_MAIN);
+	lv_style_set_width(&style, 162);
+    lv_style_set_height(&style, LV_SIZE_CONTENT);
 }
 
 void initialize() {
@@ -150,20 +209,131 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-ASSET(leftfirst_txt);
-
+//ASSET(leftfirst_txt);
+ASSET(leftsecond_txt);
+//ASSET(park_path_txt);
+//ASSET(rightfirst_txt);
+ASSET(rightsecond_txt);
 void autonomous() {
-// set position to x:0, y:0, heading:0
-	chassis.setPose(-62.549, 16.342, 0);
-	stage1(127);
-	chassis.follow(leftfirst_txt, 15, 2000);
-	chassis.waitUntil(50);
-	stage1(0);
+
+    // left auto
+    chassis.setPose(-50.733, 15.869, 0);
+    chassis.moveToPose(-50.733, 23, 2000);
+    chassis.turnToHeading(90, 2000);
+    chassis.moveToPose(-22.2, 23, 3000);
+    stage1(127);
+    scraper.set_value(true);
+    chassis.turnToHeading(315, 2000);
+    chassis.moveToPose(-8.451, 8.031, 315, 4000);
+    stage2(127);
+    chassis.waitUntil(5);
+    stage2(0);
+    chassis.follow(leftsecond_txt, 15, 5000);
+    chassis.moveToPoint(-25.305, 47.48, 2000, {.forwards = false}); 
+    stage2(127);
+    chassis.waitUntil(10);
+    chassis.moveToPose(-64.893, 46.538, 270, 3000);
+
+    // right auto
+    //chassis.setPose(-50.733, -15.869, 180);
+    //chassis.moveToPose(-50.733, -23, 2000);
+    //chassis.turnToHeading(90, 2000);
+    //chassis.moveToPose(-22.2, -23, 3000);
+    //stage1(127);
+    //scraper.set_value(true);
+    //chassis.turnToHeading(225, 2000);
+    //chassis.moveToPose(-8.451, -8.031, 45, 4000);
+    //stage2(127);
+    //chassis.waitUntil(5);
+    //stage2(0);
+    //chassis.follow(rightsecond_txt, 15, 5000);
+    //chassis.moveToPoint(-25.305, -47.48, 2000, {.forwards = false});
+    //stage2(127);
+    //chassis.waitUntil(10);
+    //chassis.moveToPose(-64.893, -46.538, 270, 3000);
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //left
+    //chassis.setPose(-62.168, 16.055, 0);
+	//stage1(127);
+	//chassis.follow(leftfirst_txt, 15, 3000);
+	//chassis.moveToPose(-7.864, 9, 316, 3000, {.forwards = false});
+	//redirect.set_value(false);
+    //chassis.waitUntil(27);
+	//stage2(127); 
+	//chassis.waitUntil(1);
+	//scraper.set_value(true);
+	//redirect.set_value(false);
+	//chassis.follow(leftsecond_txt, 15, 5000);
+	//stage2(0);
+	//stage1(127);
+	//chassis.moveToPose(-24.317, 44.988, 270, 2000, {.forwards = false});
+    //chassis.waitUntil(10);
+	//stage2(127);
+    //chassis.waitUntil(10);
+	//chassis.moveToPose(-64.274, 44.275, 270, 2000);
+    
+    
+    //skills (run after left)
+    //chassis.moveToPose(-17.954, -0.52, 5000);
+    //chassis.turnToHeading(180, 2000);
+    //stage1(127);
+    //stage2(127);
+    //scaper.set_value(false);
+    //chassis.moveToPose(-62.611, 0);
+
+    //right (run separately)
+    //scraper.set_value(false);
+    //redirect.set_value(true);
+    //descore.set_value(false);
+    //chassis.setPose(-62.294, 16.647, 180);
+    //turnToHeading(165, 2000);
+    //stage1(127); 
+    //chassis.follow(rightfirst_txt, 15, 5000);
+    //chassis.turnToHeading(210, 3000);
+    //scraper.set_value(true);
+    //chassis.follow(rightsecond_txt, 15, 6000);
+    //wait(15);
+    //chassis.moveToPose(-23.798, -47.352, 270, 5000);
+    //wait(5);
+    //stage2(127);
+    //wait(15);
+    //chassis.moveToPose(-66.09, -47.352, 270, 5000);
+
+
+
+
+
+
 
 	
 }
 /**
- * Runs the operator control code. This function will be started in its own task
+ * Runs the operator control code. This function will  be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
  * the Field Management System or the VEX Competition Switch in the operator
  * control mode.
@@ -232,7 +402,23 @@ void opcontrol() {
        		redirect.toggle();
 		}
 
-	
+		// Turn on the sensor's LED for better results in low light
+        //color_sensor.set_led_brightness(100); 
+
+        // Check if the detected color is red
+        //if (color_sensor.color() == vex::color::red) {
+            
+            // e.g., intake.move_voltage(12000); 
+        //} 
+        // Check if the detected color is blue
+        //else if (color_sensor.color() == vex::color::blue) {
+            // Code to run when blue is detected
+            // e.g., intake.move_voltage(-12000); // Reverse the intake
+        //} 
+        // If neither color is detected, stop or do something else
+        //else {
+		
+        //}
         // A small delay is necessary to prevent the brain from overloading
         pros::delay(21); 
 	} 	                         // Run for 20 ms then update                        // Run for 20 ms then update
