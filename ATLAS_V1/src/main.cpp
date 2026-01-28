@@ -93,23 +93,26 @@ pros::adi::Pneumatics redirect({17, 'd'}, false);
 int currentautonselected = -1;
 static lv_obj_t* selectscreen = NULL;
 static lv_obj_t* confirmscreen = NULL;
+static lv_obj_t* settingsscreen = NULL;
 int temporaryselectedauton = 0;
 
 void showConfirmScreen(int autonChoice);
 void confirmSelection(lv_event_t * e);
 void goBackToSelection(lv_event_t * e);
+void showSettingsScreen(lv_event_t * e);
+void closeSettingsScreen(lv_event_t * e);
 
-static void leftBtnClick(lv_event_t * e) {
+static void leftButtonClick(lv_event_t * e) {
     temporaryselectedauton = 0;
     showConfirmScreen(0);
 }
 
-static void rightBtnClick(lv_event_t * e) {
+static void rightButtonClick(lv_event_t * e) {
     temporaryselectedauton = 1;
     showConfirmScreen(1);
 }
 
-static void skillsBtnClick(lv_event_t * e) {
+static void skillsButtonClick(lv_event_t * e) {
     temporaryselectedauton = 2;
     showConfirmScreen(2);
 }
@@ -126,33 +129,33 @@ void showConfirmScreen(int autonChoice) {
     lv_obj_center(confirmscreen);
     lv_obj_remove_flag(confirmscreen, LV_OBJ_FLAG_SCROLLABLE);
     
-    const char* autonName = (autonChoice == 0) ? "LEFT SIDE" : (autonChoice == 1) ? "RIGHT SIDE" : "SKILLS";
+    const char* autonName = (autonChoice == 0) ? "LEFT SIDE" : (autonChoice == 1) ? "RIGHT SIDE" : "SOLO";
     
     lv_obj_t* confirmTitle = lv_label_create(confirmscreen);
     lv_label_set_text(confirmTitle, autonName);
     lv_obj_align(confirmTitle, LV_ALIGN_TOP_MID, 0, 40);
     lv_obj_set_style_text_font(confirmTitle, &lv_font_montserrat_24, 0);
     
-    lv_obj_t* confirmBtn = lv_button_create(confirmscreen);
-    lv_obj_set_size(confirmBtn, 200, 80);
-    lv_obj_align(confirmBtn, LV_ALIGN_CENTER, 0, 0);
-    lv_obj_add_event_cb(confirmBtn, confirmSelection, LV_EVENT_CLICKED, NULL);
-    lv_obj_set_style_bg_color(confirmBtn, lv_palette_main(LV_PALETTE_GREEN), LV_PART_MAIN);
+    lv_obj_t* confirmButton = lv_button_create(confirmscreen);
+    lv_obj_set_size(confirmButton, 200, 80);
+    lv_obj_align(confirmButton, LV_ALIGN_CENTER, 0, 0);
+    lv_obj_add_event_cb(confirmButton, confirmSelection, LV_EVENT_CLICKED, NULL);
+    lv_obj_set_style_bg_color(confirmButton, lv_palette_main(LV_PALETTE_GREEN), LV_PART_MAIN);
     
-    lv_obj_t* confirmLabel = lv_label_create(confirmBtn);
-    lv_label_set_text(confirmLabel, "CONFIRM");
-    lv_obj_center(confirmLabel);
-    lv_obj_set_style_text_font(confirmLabel, &lv_font_montserrat_20, 0);
+    lv_obj_t* confirmButtonLabel = lv_label_create(confirmButton);
+    lv_label_set_text(confirmButtonLabel, "CONFIRM");
+    lv_obj_center(confirmButtonLabel);
+    lv_obj_set_style_text_font(confirmButtonLabel, &lv_font_montserrat_20, 0);
     
-    lv_obj_t* backBtn = lv_button_create(confirmscreen);
-    lv_obj_set_size(backBtn, 120, 50);
-    lv_obj_align(backBtn, LV_ALIGN_BOTTOM_LEFT, 20, -20);
-    lv_obj_add_event_cb(backBtn, goBackToSelection, LV_EVENT_CLICKED, NULL);
-    lv_obj_set_style_bg_color(backBtn, lv_palette_main(LV_PALETTE_GREY), LV_PART_MAIN);
+    lv_obj_t* backButton = lv_button_create(confirmscreen);
+    lv_obj_set_size(backButton, 120, 50);
+    lv_obj_align(backButton, LV_ALIGN_BOTTOM_LEFT, 20, -20);
+    lv_obj_add_event_cb(backButton, goBackToSelection, LV_EVENT_CLICKED, NULL);
+    lv_obj_set_style_bg_color(backButton, lv_palette_main(LV_PALETTE_GREY), LV_PART_MAIN);
     
-    lv_obj_t* backLabel = lv_label_create(backBtn);
-    lv_label_set_text(backLabel, "BACK");
-    lv_obj_center(backLabel);
+    lv_obj_t* backButtonLabel = lv_label_create(backButton);
+    lv_label_set_text(backButtonLabel, "BACK");
+    lv_obj_center(backButtonLabel);
 }
 
 void goBackToSelection(lv_event_t * e) {
@@ -163,29 +166,81 @@ void goBackToSelection(lv_event_t * e) {
     lv_obj_remove_flag(selectscreen, LV_OBJ_FLAG_HIDDEN);
 }
 
+void showSettingsScreen(lv_event_t * e) {
+    lv_obj_add_flag(selectscreen, LV_OBJ_FLAG_HIDDEN);
+    
+    if(settingsscreen != NULL) {
+        lv_obj_delete(settingsscreen);
+    }
+    
+    settingsscreen = lv_obj_create(lv_screen_active());
+    lv_obj_set_size(settingsscreen, 480, 240);
+    lv_obj_center(settingsscreen);
+    lv_obj_remove_flag(settingsscreen, LV_OBJ_FLAG_SCROLLABLE);
+    
+    lv_obj_t* settingsTitle = lv_label_create(settingsscreen);
+    lv_label_set_text(settingsTitle, "MOTOR TEMPERATURES");
+    lv_obj_align(settingsTitle, LV_ALIGN_TOP_MID, 0, 10);
+    lv_obj_set_style_text_font(settingsTitle, &lv_font_montserrat_20, 0);
+    
+    lv_obj_t* tempLabel1 = lv_label_create(settingsscreen);
+    lv_label_set_text(tempLabel1, "Motor 1: --F  Motor 2: --F");
+    lv_obj_align(tempLabel1, LV_ALIGN_TOP_LEFT, 20, 50);
+    
+    lv_obj_t* tempLabel2 = lv_label_create(settingsscreen);
+    lv_label_set_text(tempLabel2, "Motor 3: --F  Motor 4: --F");
+    lv_obj_align(tempLabel2, LV_ALIGN_TOP_LEFT, 20, 80);
+    
+    lv_obj_t* tempLabel3 = lv_label_create(settingsscreen);
+    lv_label_set_text(tempLabel3, "Motor 5: --F  Motor 6: --F");
+    lv_obj_align(tempLabel3, LV_ALIGN_TOP_LEFT, 20, 110);
+    
+    lv_obj_t* tempLabel4 = lv_label_create(settingsscreen);
+    lv_label_set_text(tempLabel4, "Motor 7: --F  Motor 8: --F");
+    lv_obj_align(tempLabel4, LV_ALIGN_TOP_LEFT, 20, 140);
+    
+    lv_obj_t* closeButton = lv_button_create(settingsscreen);
+    lv_obj_set_size(closeButton, 120, 50);
+    lv_obj_align(closeButton, LV_ALIGN_BOTTOM_MID, 0, -20);
+    lv_obj_add_event_cb(closeButton, closeSettingsScreen, LV_EVENT_CLICKED, NULL);
+    lv_obj_set_style_bg_color(closeButton, lv_palette_main(LV_PALETTE_GREY), LV_PART_MAIN);
+    
+    lv_obj_t* closeButtonLabel = lv_label_create(closeButton);
+    lv_label_set_text(closeButtonLabel, "CLOSE");
+    lv_obj_center(closeButtonLabel);
+}
+
+void closeSettingsScreen(lv_event_t * e) {
+    if(settingsscreen != NULL) {
+        lv_obj_delete(settingsscreen);
+        settingsscreen = NULL;
+    }
+    lv_obj_remove_flag(selectscreen, LV_OBJ_FLAG_HIDDEN);
+}
+
 void confirmSelection(lv_event_t * e) {
     currentautonselected = temporaryselectedauton;
     
     lv_obj_delete(confirmscreen);
     confirmscreen = NULL;
     
-    lv_obj_t* doneScreen = lv_obj_create(lv_screen_active());
-    lv_obj_set_size(doneScreen, 480, 240);
-    lv_obj_center(doneScreen);
-    lv_obj_remove_flag(doneScreen, LV_OBJ_FLAG_SCROLLABLE);
-    lv_obj_set_style_bg_color(doneScreen, lv_palette_main(LV_PALETTE_GREEN), LV_PART_MAIN);
+    lv_obj_t* completedScreen = lv_obj_create(lv_screen_active());
+    lv_obj_set_size(completedScreen, 480, 240);
+    lv_obj_center(completedScreen);
+    lv_obj_remove_flag(completedScreen, LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_set_style_bg_color(completedScreen, lv_palette_main(LV_PALETTE_GREEN), LV_PART_MAIN);
     
-    const char* autonName = (currentautonselected == 0) ? "LEFT SIDE" : (currentautonselected == 1) ? "RIGHT SIDE" : "SKILLS";
+    const char* autonName = (currentautonselected == 0) ? "LEFT SIDE" : (currentautonselected == 1) ? "RIGHT SIDE" : "SOLO";
     
-    lv_obj_t* doneTitle = lv_label_create(doneScreen);
-    lv_label_set_text(doneTitle, "READY");
-    lv_obj_align(doneTitle, LV_ALIGN_TOP_MID, 0, 30);
-    lv_obj_set_style_text_font(doneTitle, &lv_font_montserrat_24, 0);
+    lv_obj_t* completedTitle = lv_label_create(completedScreen);
+    lv_label_set_text(completedTitle, "READY");
+    lv_obj_align(completedTitle, LV_ALIGN_TOP_MID, 0, 30);
+    lv_obj_set_style_text_font(completedTitle, &lv_font_montserrat_24, 0);
     
-    lv_obj_t* doneLabel = lv_label_create(doneScreen);
-    lv_label_set_text(doneLabel, autonName);
-    lv_obj_align(doneLabel, LV_ALIGN_CENTER, 0, 0);
-    lv_obj_set_style_text_font(doneLabel, &lv_font_montserrat_24, 0);
+    lv_obj_t* completedLabel = lv_label_create(completedScreen);
+    lv_label_set_text(completedLabel, autonName);
+    lv_obj_align(completedLabel, LV_ALIGN_CENTER, 0, 0);
+    lv_obj_set_style_text_font(completedLabel, &lv_font_montserrat_24, 0);
 }
 
 LV_IMAGE_DECLARE(VEX_screensaverv3);
@@ -262,35 +317,45 @@ void initialize() {
 	lv_obj_align(title, LV_ALIGN_TOP_MID, 0, 20);
 	lv_obj_set_style_text_font(title, &lv_font_montserrat_20, 0);
 
-	lv_obj_t* leftBtn = lv_button_create(selectscreen);
-	lv_obj_set_size(leftBtn, 140, 60);
-	lv_obj_align(leftBtn, LV_ALIGN_CENTER, -160, 0);
-	lv_obj_add_event_cb(leftBtn, leftBtnClick, LV_EVENT_CLICKED, NULL);
-	lv_obj_set_style_bg_color(leftBtn, lv_palette_main(LV_PALETTE_BLUE), LV_PART_MAIN);
+	lv_obj_t* leftButton = lv_button_create(selectscreen);
+	lv_obj_set_size(leftButton, 140, 60);
+	lv_obj_align(leftButton, LV_ALIGN_CENTER, -160, 0);
+	lv_obj_add_event_cb(leftButton, leftButtonClick, LV_EVENT_CLICKED, NULL);
+	lv_obj_set_style_bg_color(leftButton, lv_palette_main(LV_PALETTE_BLUE), LV_PART_MAIN);
 	
-	lv_obj_t* leftLabel = lv_label_create(leftBtn);
-	lv_label_set_text(leftLabel, "LEFT");
-	lv_obj_center(leftLabel);
+	lv_obj_t* leftButtonLabel = lv_label_create(leftButton);
+	lv_label_set_text(leftButtonLabel, "LEFT");
+	lv_obj_center(leftButtonLabel);
 
-	lv_obj_t* rightBtn = lv_button_create(selectscreen);
-	lv_obj_set_size(rightBtn, 140, 60);
-	lv_obj_align(rightBtn, LV_ALIGN_CENTER, 0, 0);
-	lv_obj_add_event_cb(rightBtn, rightBtnClick, LV_EVENT_CLICKED, NULL);
-	lv_obj_set_style_bg_color(rightBtn, lv_palette_main(LV_PALETTE_RED), LV_PART_MAIN);
+	lv_obj_t* rightButton = lv_button_create(selectscreen);
+	lv_obj_set_size(rightButton, 140, 60);
+	lv_obj_align(rightButton, LV_ALIGN_CENTER, 0, 0);
+	lv_obj_add_event_cb(rightButton, rightButtonClick, LV_EVENT_CLICKED, NULL);
+	lv_obj_set_style_bg_color(rightButton, lv_palette_main(LV_PALETTE_RED), LV_PART_MAIN);
 	
-	lv_obj_t* rightLabel = lv_label_create(rightBtn);
-	lv_label_set_text(rightLabel, "RIGHT");
-	lv_obj_center(rightLabel);
+	lv_obj_t* rightButtonLabel = lv_label_create(rightButton);
+	lv_label_set_text(rightButtonLabel, "RIGHT");
+	lv_obj_center(rightButtonLabel);
 
-	lv_obj_t* skillsBtn = lv_button_create(selectscreen);
-	lv_obj_set_size(skillsBtn, 140, 60);
-	lv_obj_align(skillsBtn, LV_ALIGN_CENTER, 160, 0);
-	lv_obj_add_event_cb(skillsBtn, skillsBtnClick, LV_EVENT_CLICKED, NULL);
-	lv_obj_set_style_bg_color(skillsBtn, lv_palette_main(LV_PALETTE_GREEN), LV_PART_MAIN);
+	lv_obj_t* skillsButton = lv_button_create(selectscreen);
+	lv_obj_set_size(skillsButton, 140, 60);
+	lv_obj_align(skillsButton, LV_ALIGN_CENTER, 160, 0);
+	lv_obj_add_event_cb(skillsButton, skillsButtonClick, LV_EVENT_CLICKED, NULL);
+	lv_obj_set_style_bg_color(skillsButton, lv_palette_main(LV_PALETTE_GREEN), LV_PART_MAIN);
 	
-	lv_obj_t* skillsLabel = lv_label_create(skillsBtn);
-	lv_label_set_text(skillsLabel, "SKILLS");
-	lv_obj_center(skillsLabel);
+	lv_obj_t* skillsButtonLabel = lv_label_create(skillsButton);
+	lv_label_set_text(skillsButtonLabel, "SOLO");
+	lv_obj_center(skillsButtonLabel);
+	
+	lv_obj_t* settingsButton = lv_button_create(selectscreen);
+	lv_obj_set_size(settingsButton, 120, 40);
+	lv_obj_align(settingsButton, LV_ALIGN_BOTTOM_RIGHT, -20, -20);
+	lv_obj_add_event_cb(settingsButton, showSettingsScreen, LV_EVENT_CLICKED, NULL);
+	lv_obj_set_style_bg_color(settingsButton, lv_palette_main(LV_PALETTE_GREY), LV_PART_MAIN);
+	
+	lv_obj_t* settingsButtonLabel = lv_label_create(settingsButton);
+	lv_label_set_text(settingsButtonLabel, "TEMPS");
+	lv_obj_center(settingsButtonLabel);
 	
 	chassis.calibrate();
 }
@@ -321,10 +386,10 @@ void autonomous() {
 		chassis.moveToPose(-62.503, 46.818, 270, 2000);
 	}
 	else if (currentautonselected == 1) {
-
+		// RIGHT SIDE AUTONOMOUS CODE GOES HERE
 	}
 	else if (currentautonselected == 2) {
-
+		// SOLO AUTONOMOUS CODE GOES HERE
 	}
 }
 
