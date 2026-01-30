@@ -177,8 +177,10 @@ void menu(void)
 
 void initialize() {
 	display_img_from_c_array();
+    menu();
 	chassis.calibrate();
 }
+
 
 /**
  * Runs while the robot is in the disabled state of Field Management System or
@@ -217,24 +219,28 @@ ASSET(rightsecond_txt);
 void autonomous() {
 
     // left auto
-    chassis.setPose(-50.733, 15.869, 0);
-    chassis.moveToPose(-50.733, 23, 2000);
-    chassis.turnToHeading(90, 2000);
-    chassis.moveToPose(-22.2, 23, 3000);
-    stage1(127);
-    scraper.set_value(true);
-    chassis.turnToHeading(315, 2000);
-    chassis.moveToPose(-8.451, 8.031, 315, 4000);
-    stage2(127);
-    chassis.waitUntil(5);
-    stage2(0);
-    chassis.follow(leftsecond_txt, 15, 5000);
-    chassis.moveToPoint(-25.305, 47.48, 2000, {.forwards = false}); 
-    stage2(127);
-    chassis.waitUntil(10);
-    chassis.moveToPose(-64.893, 46.538, 270, 3000);
+    
+    //chassis.setPose(-50.733, 15.869, 0);
+    //redirect.set_value(true);
+    //chassis.moveToPoint(-50.733, 23, 2000);
+    //chassis.turnToHeading(90, 2000);
+    //stage1(95);
+    //chassis.moveToPoint(-22.2, 23, 3000);
+    //scraper.set_value(true);
+    //chassis.turnToHeading(315, 2000);
+    //chassis.moveToPose(-8.451, 8.031, 315, 4000);
+    //stage2(127);
+    //chassis.waitUntil(5);
+    //stage2(0);
+    //chassis.follow(leftsecond_txt, 15, 5000);
+    //redirect.set_value(false);
+    //chassis.moveToPoint(-25.305, 47.48, 2000, {.forwards = false}); 
+    //stage2(127);
+    //chassis.waitUntil(5);
+    //chassis.moveToPose(-64.893, 46.538, 270, 3000);
 
     // right auto
+    
     //chassis.setPose(-50.733, -15.869, 180);
     //chassis.moveToPose(-50.733, -23, 2000);
     //chassis.turnToHeading(90, 2000);
@@ -251,6 +257,97 @@ void autonomous() {
     //stage2(127);
     //chassis.waitUntil(10);
     //chassis.moveToPose(-64.893, -46.538, 270, 3000);
+
+    // solo auto
+
+    //chassis.setPose(-47.225, -11.635, 180);
+    //redirect.set_value(false);
+    //scraper.set_value(true);
+    //chassis.moveToPose(-47.225, -47.499, 270, 3000);
+    //stage1(127);
+    //chassis.moveToPose(-64.316, -47.499, 270, 3000);
+    //chassis.waitUntil(3);
+    //chassis.moveToPose(-23.129, -47.499, 270, 3000, {.forwards = false});
+    //stage2(127);
+    //chassis.waitUntil(4);
+    //stage2(0);
+    //scraper.set_value(false);
+    //chassis.turnToHeading(0, 2000);
+    //chassis.moveToPose(-22.568, 23.949, 315, 5000);
+    //scraper.set_value(true);
+    //chassis.moveToPose(-8.451, 8.031, 315, 4000);
+    //redirect.set_value(true);
+    //stage2(127);
+    //chassis.waitUntil(5);
+    //stage2(0);
+    //chassis.follow(leftsecond_txt, 15, 5000);
+    //redirect.set_value(false);
+    //chassis.moveToPoint(-25.305, 47.48, 2000, {.forwards = false}); 
+    //stage2(127);
+
+    //skills auto
+
+    chassis.setPose(-63.073, -16.725, 0);
+    scraper.set_value(false);
+    redirect.set_value(false);
+    stage1(127);
+    chassis.moveToPose(-63.073, 18.255, 30, 7000);
+    chassis.moveToPose(-45.856, 47, 270, 3000);
+    chassis.moveToPose(-23.994, 47, 270, 2500, {.forwards = false});
+    stage2(127);
+    chassis.waitUntil(5);
+    stage2(0);
+    scraper.set_value(true);
+    chassis.moveToPose(-64.713, 47, 270, 3000);
+    chassis.waitUntil(5);
+    chassis.moveToPose(-23.994, 47, 270, 2500, {.forwards = false});
+    stage2(127);
+    chassis.waitUntil(5);
+    stage2(0);
+    scraper.set_value(false);
+    chassis.moveToPose(-44.49, 61.98, 90, 3000);
+    chassis.moveToPose(41.047, 61.98, 167.5, 4000);
+    scraper.set_value(true);
+    chassis.moveToPose(44.326, 47, 90, 3000);
+    chassis.moveToPose(64.702, 47, 90, 3000);
+    chassis.waitUntil(5);
+    chassis.moveToPose(24.65, 47, 90, 2500, {.forwards = false});
+    stage2(127);
+    chassis.waitUntil(5);
+    stage2(0);
+    scraper.set_value(false);
+    chassis.moveToPose(62.909, 15.796, 180, 4000);
+    chassis.moveToPose(62.909, -20.004, 209, 7000);
+    scraper.set_value(true);
+    chassis.moveToPose(47.332, -47, 90, 3000);
+    chassis.moveToPose(24.65, -47, 90, 2500, {.forwards = false});
+    stage2(127);
+    chassis.waitUntil(5);
+    stage2(0);
+    chassis.moveToPose(64.702, -47, 90, 3000);
+    chassis.waitUntil(5);
+    chassis.moveToPose(24.65, -47, 90, 2500, {.forwards = false});
+    stage2(127);
+    chassis.waitUntil(5);
+    stage2(0);
+    scraper.set_value(false);
+    chassis.moveToPose(44.326, -61.98, 270, 3000);
+    chassis.moveToPose(-34.379, -61.98, 319, 4000);
+    chassis.moveToPose(-47.496, -47, 270, 3000);
+    scraper.set_value(true);
+    chassis.moveToPose(-64.713, -47, 270, 3000);
+    chassis.waitUntil(5);
+    chassis.moveToPose(-23.994, -47, 270, 2500, {.forwards = false});
+    stage2(127);
+    chassis.waitUntil(5);
+    stage2(0);
+    scraper.set_value(false);
+    chassis.moveToPose(-63.073, -30.115, 0, 3000);
+    chassis.moveToPose(-62.8, 0.219, 0, 7000);
+    stage1(0);
+
+
+
 
 
 
